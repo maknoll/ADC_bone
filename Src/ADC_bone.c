@@ -43,6 +43,7 @@ int main(int argc, char * argv[])
         	break;
         case 'f':
         	snprintf(filenameprefix,sizeof(filenameprefix),"%s",optarg);
+        	break;
         default:
             fprintf(stderr, "usage: %s [-b baudrate] [-f filename-prefix]\n", *argv);
             exit(-1);
@@ -85,7 +86,7 @@ int main(int argc, char * argv[])
 
     for (int i=0; i<4; i++) {
     	char filename[128];
-    	snprintf(filename, sizeof(filename), "%s-%i.bin", filenameprefix, i);
+    	snprintf(filename, sizeof(filename), "%s-%i.bin", filenameprefix, i+1);
     	files[i] = fopen(filename,"w");
     	if (files[i] == NULL) {
     		fprintf(stderr, "Value of errno: %d\n", errno);
