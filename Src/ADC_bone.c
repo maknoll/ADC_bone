@@ -61,7 +61,7 @@ int main(int argc, char * argv[])
     	exit(-1);
     }
 
-    f = ftdi_set_baudrate(ftdi, 8000000);
+    f = ftdi_set_baudrate(ftdi, baudrate);
     if (f < 0)
     {
         fprintf(stderr, "unable to set baudrate: %d (%s)\n", f, ftdi_get_error_string(ftdi));
