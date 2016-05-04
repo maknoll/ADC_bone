@@ -89,7 +89,7 @@ int main(int argc, char * argv[])
     }
 
     ftdi_set_interface(ftdi, 1);
-    ftdi_read_data_set_chunksize(ftdi, 262144);
+    ftdi_read_data_set_chunksize(ftdi, 1<<14);
     uint32_t chunksize = 0;
     ftdi_read_data_get_chunksize(ftdi,&chunksize);
     printf("%i\n\r",chunksize);
@@ -169,7 +169,6 @@ int main(int argc, char * argv[])
 						state = IDLE;
 					}
 				}
-				break;
 			case DATA:
 				count = ftdi_read_data(ftdi, buffer+samples, sizeof(buffer)-samples);
 				samples += count;
