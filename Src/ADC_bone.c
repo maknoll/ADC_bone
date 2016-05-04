@@ -89,6 +89,10 @@ int main(int argc, char * argv[])
     }
 
     ftdi_set_interface(ftdi, 1);
+    ftdi_read_data_set_chunksize(ftdi, 262144);
+    uint32_t chunksize = 0;
+    ftdi_read_data_get_chunksize(ftdi,&chunksize);
+    printf("%i\n\r",chunksize);
 
 	int f = 0;
     f = ftdi_usb_open(ftdi, vid, pid);
@@ -134,7 +138,7 @@ int main(int argc, char * argv[])
 	enum decoder_state state = IDLE;
 	uint16_t active_channel = 1;
 	uint16_t samples = 0;
-#define BUFFERLENGTH (uint16_t)4000
+#define BUFFERLENGTH (uint16_t)2000
 	uint8_t buffer[BUFFERLENGTH];
 	uint8_t decoded_buffer[BUFFERLENGTH/2];
 	uint16_t count = 0;
@@ -173,8 +177,8 @@ int main(int argc, char * argv[])
 				if (BUFFERLENGTH <= samples) {
 					samples = 0;
 					state = IDLE;
-					me_decode((uint16_t*)buffer,decoded_buffer,BUFFERLENGTH/2);
-					fwrite(decoded_buffer, sizeof(char), sizeof(decoded_buffer), files[active_channel-1]);
+					//me_decode((uint16_t*)buffer,decoded_buffer,BUFFERLENGTH/2);
+					fwrite(buffer, sizeof(char), sizeof(buffer), files[active_channel-1]);
 				}
 				break;
 		}
